@@ -1,5 +1,7 @@
+package trie;
+
 /**
- * Class for TrieNode implementation
+ * Class for trie.TrieNode implementation
  */
 public class TrieNode {
     private TrieNode[] alphabet;

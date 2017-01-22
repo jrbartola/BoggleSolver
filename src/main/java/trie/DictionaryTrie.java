@@ -1,3 +1,5 @@
+package trie;
+
 import java.io.*;
 
 /**
@@ -6,7 +8,7 @@ import java.io.*;
 public class DictionaryTrie {
     public TrieNode root;
 
-    /** Creates a new DictionaryTrie object. Result
+    /** Creates a new trie.DictionaryTrie object. Result
      *  is a Trie containing all works from newline separated
      *  dictionary file
      *
