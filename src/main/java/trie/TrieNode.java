@@ -6,22 +6,25 @@ package trie;
 public class TrieNode {
     private TrieNode[] alphabet;
     private int count;
+    private boolean leaf;
 
     public TrieNode() {
         count = 0;
         alphabet = new TrieNode[256];
+        leaf = false;
     }
 
     public TrieNode(int alphasize) {
         count = 0;
         alphabet = new TrieNode[alphasize];
+        leaf = false;
     }
 
     private int getCharIndex(char c) {
         return c;// - 'a';
     }
 
-    private TrieNode getNodeFor(char c) {
+    public TrieNode getNodeFor(char c) {
         return alphabet[getCharIndex(c)];
     }
 
@@ -42,6 +45,10 @@ public class TrieNode {
             alphabet[getCharIndex(currChar)] = child;
         }
 
+        if (index + 1 == s.length()) {
+            child.leaf = true;
+        }
+
         child.add(s, index + 1);
     }
 
@@ -50,7 +57,8 @@ public class TrieNode {
     }
 
     private boolean exists(String s, int index) {
-        if (s.length() == index) return true;
+        if (s.length() == index)
+            return this.leaf;
 
         TrieNode child = getNodeFor(s.charAt(index));
 

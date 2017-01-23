@@ -30,12 +30,12 @@ public class DictionaryTrie {
     public static void main(String[] args) {
         try {
             DictionaryTrie dt = new DictionaryTrie(new File("src/main/java/dictionary.txt"));
-            System.out.println(dt.root.getNumPrefixesOf("ttt"));
-            System.out.println(dt.root.getNumPrefixesOf("tool"));
-            System.out.println(dt.root.getNumPrefixesOf("shade"));
-            System.out.println(dt.root.getNumPrefixesOf("brim"));
-            System.out.println(dt.root.getNumPrefixesOf("stone"));
-            System.out.println(dt.root.getNumPrefixesOf("slim"));
+            System.out.println(dt.root.exists("ba"));
+            System.out.println(dt.root.getNumPrefixesOf("angio"));
+            System.out.println(dt.root.getNumPrefixesOf("bafr"));
+            System.out.println(dt.root.getNumPrefixesOf("bafs"));
+            System.out.println(dt.root.getNumPrefixesOf("bafi"));
+
 
         } catch (IOException e) {
             e.printStackTrace();
