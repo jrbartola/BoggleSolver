@@ -58,6 +58,10 @@ public class Boggle {
 
         while (!s.isEmpty()) {
             BoggleLetter curr = s.pop();
+
+            while (curr.getParent() != lettersInUse.get(lettersInUse.size()-1)) {
+                curr = curr.getParent();
+            }
             char currChar = curr.getLetter();//matrix[curr.getCoordinate().row][curr.getCoordinate().col];
 
             lettersInUse.add(curr);
@@ -84,7 +88,7 @@ public class Boggle {
                 for (BoggleLetter bl : getAdjacent(curr)) {
                     if (!lettersInUse.contains(bl)) {
                         s.push(bl);
-                        parentMap.put(bl, curr);
+                        bl.setParent(curr);
                     }
                 }
 

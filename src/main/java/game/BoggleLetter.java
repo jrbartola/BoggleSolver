@@ -12,6 +12,7 @@ public class BoggleLetter {
     public BoggleLetter(Coordinate c, char letter) {
         coordinate = c;
         this.letter = letter;
+        parent = null;
     }
 
     public Coordinate getCoordinate() {
