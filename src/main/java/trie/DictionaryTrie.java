@@ -33,8 +33,8 @@ public class DictionaryTrie {
             System.out.println(dt.root.exists("ba"));
             System.out.println(dt.root.getNumPrefixesOf("angio"));
             System.out.println(dt.root.getNumPrefixesOf("bafr"));
-            System.out.println(dt.root.getNumPrefixesOf("bafs"));
-            System.out.println(dt.root.getNumPrefixesOf("bafi"));
+            System.out.println(dt.root.getNumPrefixesOf("t"));
+            System.out.println(dt.root.getNumPrefixesOf("aeon"));
 
 
         } catch (IOException e) {

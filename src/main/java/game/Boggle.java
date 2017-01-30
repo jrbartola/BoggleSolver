@@ -37,7 +37,7 @@ public class Boggle {
         // Go through entire boggle board searching for words
         for (int i = 0; i < dim; i++) {
             for (int j = 0; j < dim; j++) {
-                dfsFind(new Coordinate(i, j));
+                solutions.addAll(dfsFind(new Coordinate(i, j)));
             }
         }
 
@@ -46,8 +46,9 @@ public class Boggle {
 
     private List<String> dfsFind(Coordinate coord) {
         // Setup our DFS
-        boolean[][] visited = new boolean[dim][dim];
-        HashMap<Character, Character> path = new HashMap<>();
+       // boolean[][] visited = new boolean[dim][dim];
+        HashMap<Coordinate, Coordinate> parentMap = new HashMap<>();
+        List<Coordinate> coordsInUse = new ArrayList<>();
         List<String> wordList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         TrieNode prevNode = null;
@@ -59,36 +60,58 @@ public class Boggle {
             Coordinate curr = s.pop();
             char currChar = matrix[curr.row][curr.col];
 
-            if (!visited[curr.row][curr.col]) {
-                visited[curr.row][curr.col] = true;
+            coordsInUse.add(curr);
+            // Retrieve next letter in word from dictionary
+            TrieNode child = charNode.getNodeFor(currChar);
 
-                // Retrieve next letter in word from dictionary
-                TrieNode child = charNode.getNodeFor(currChar);
+            // If we have a match continue searching the word
+            if (child != null) {
 
-                // If we have a match continue searching the word
-                if (child != null) {
-                    sb.append(currChar);
-                    prevNode = charNode;
-                    charNode = child;
+                sb.append(currChar);
 
-                    // If the word we've built up so far is valid, add it to
-                    // the resultant word list
+                prevNode = charNode;
+                charNode = child;
 
-                    if (child.exists(sb.toString())) {
-                        wordList.add(sb.toString());
-                    }
+                // If the word we've built up so far is valid, add it to
+                // the resultant word list
+                String wordString = sb.toString();
 
-                    getAdjacent(curr).forEach(a -> s.push(a));
-
-                } else {
-                    // Backtrack to the previous character
-                    sb.deleteCharAt(sb.length()-1);
-                    charNode = prevNode;
+                if (child.exists(wordString) && wordString.length() >= 2) {
+                    wordList.add(wordString);
                 }
 
+                //getAdjacent(curr).forEach(a -> s.push(a));
+                for (Coordinate c : getAdjacent(curr)) {
+                    if (!coordsInUse.contains(c)) {
+                        s.push(c);
+                        parentMap.put(c, curr);
+                    }
+                }
+
+            } else {
+
+
+
+                // Backtrack to the previous character
+
+                /**
+                 * psuedocode:
+                 *
+                 * if (!hashmap.get(s.peek()).equals(currWord.get(currword.size() - 1))) {
+                 *
+                 * }
+                 *
+                 */
+
+
+                sb.deleteCharAt(sb.length()-1);
+                charNode = prevNode;
+                coordsInUse.remove(coordsInUse.size()-1);
             }
+
         }
-        return new ArrayList<String>();
+
+        return wordList;
     }
 
     private List<Coordinate> getAdjacent(Coordinate c) {
@@ -122,14 +145,9 @@ public class Boggle {
     }
 
     public static void main(String[] args) {
-        boolean[][] visited = new boolean[4][4];
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (visited[i][j] == false) {
-                    System.out.print("null");
-                }
-            }
-        }
+        Boggle b = new Boggle(3, new char[][] {{'a','r','m'},
+                {'b','e','s'}, {'n','i','m'}}, "src/main/java/dictionary.txt");
+        b.solve();//.forEach(r -> System.out.println(r));
     }
 
 
