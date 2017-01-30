@@ -7,6 +7,7 @@ public class BoggleLetter {
 
     private Coordinate coordinate;
     private char letter;
+    private BoggleLetter parent;
 
     public BoggleLetter(Coordinate c, char letter) {
         coordinate = c;
@@ -19,6 +20,14 @@ public class BoggleLetter {
 
     public char getLetter() {
         return letter;
+    }
+
+    public void setParent(BoggleLetter p) {
+        parent = p;
+    }
+
+    public BoggleLetter getParent() {
+        return parent;
     }
 
     @Override

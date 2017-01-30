@@ -47,20 +47,20 @@ public class Boggle {
     private List<String> dfsFind(Coordinate coord) {
         // Setup our DFS
        // boolean[][] visited = new boolean[dim][dim];
-        HashMap<Coordinate, Coordinate> parentMap = new HashMap<>();
-        List<Coordinate> coordsInUse = new ArrayList<>();
+        HashMap<BoggleLetter, BoggleLetter> parentMap = new HashMap<>();
+        List<BoggleLetter> lettersInUse = new ArrayList<>();
         List<String> wordList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         TrieNode prevNode = null;
         TrieNode charNode = dict.root;
-        Stack<Coordinate> s = new Stack<>();
-        s.push(coord);
+        Stack<BoggleLetter> s = new Stack<>();
+        s.push(new BoggleLetter(coord, matrix[coord.row][coord.col]));
 
         while (!s.isEmpty()) {
-            Coordinate curr = s.pop();
-            char currChar = matrix[curr.row][curr.col];
+            BoggleLetter curr = s.pop();
+            char currChar = curr.getLetter();//matrix[curr.getCoordinate().row][curr.getCoordinate().col];
 
-            coordsInUse.add(curr);
+            lettersInUse.add(curr);
             // Retrieve next letter in word from dictionary
             TrieNode child = charNode.getNodeFor(currChar);
 
@@ -76,15 +76,15 @@ public class Boggle {
                 // the resultant word list
                 String wordString = sb.toString();
 
-                if (child.exists(wordString) && wordString.length() >= 2) {
+                if (wordString.length() >= 2 && child.exists(wordString)) {
                     wordList.add(wordString);
                 }
 
                 //getAdjacent(curr).forEach(a -> s.push(a));
-                for (Coordinate c : getAdjacent(curr)) {
-                    if (!coordsInUse.contains(c)) {
-                        s.push(c);
-                        parentMap.put(c, curr);
+                for (BoggleLetter bl : getAdjacent(curr)) {
+                    if (!lettersInUse.contains(bl)) {
+                        s.push(bl);
+                        parentMap.put(bl, curr);
                     }
                 }
 
@@ -106,7 +106,7 @@ public class Boggle {
 
                 sb.deleteCharAt(sb.length()-1);
                 charNode = prevNode;
-                coordsInUse.remove(coordsInUse.size()-1);
+                lettersInUse.remove(lettersInUse.size()-1);
             }
 
         }
@@ -114,15 +114,18 @@ public class Boggle {
         return wordList;
     }
 
-    private List<Coordinate> getAdjacent(Coordinate c) {
-        List<Coordinate> adjacent = new ArrayList<>();
+    private List<BoggleLetter> getAdjacent(BoggleLetter bl) {
+        int row = bl.getCoordinate().row;
+        int col = bl.getCoordinate().col;
 
-        for (int i = c.row - 1; i < c.row + 1; i++) {
-            for (int j = c.col - 1; j < c.col + 1; j++) {
-                if (!(i == c.row && j == c.col) && i >= 0 &&
+        List<BoggleLetter> adjacent = new ArrayList<>();
+
+        for (int i = row - 1; i < row + 1; i++) {
+            for (int j = col - 1; j < col + 1; j++) {
+                if (!(i == row && j == col) && i >= 0 &&
                     i < dim && j >= 0 && j < dim) {
 
-                    adjacent.add(new Coordinate(i,j));
+                    adjacent.add(new BoggleLetter(new Coordinate(i, j), matrix[i][j]));
                 }
             }
         }
