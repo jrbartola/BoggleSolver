@@ -58,11 +58,15 @@ public class Boggle {
 
         while (!s.isEmpty()) {
             BoggleLetter curr = s.pop();
+            BoggleLetter currsParent = curr.getParent();
 
-            while (curr.getParent() != lettersInUse.get(lettersInUse.size()-1)) {
-                curr = curr.getParent();
+            while (currsParent != null && currsParent != lettersInUse.get(lettersInUse.size()-1)) {
+                lettersInUse.remove(lettersInUse.size()-1);
+                charNode = prevNode;
+                sb.deleteCharAt(sb.length()-1);
             }
-            char currChar = curr.getLetter();//matrix[curr.getCoordinate().row][curr.getCoordinate().col];
+
+            char currChar = curr.getLetter();
 
             lettersInUse.add(curr);
             // Retrieve next letter in word from dictionary
@@ -94,6 +98,7 @@ public class Boggle {
 
             } else {
 
+                // Do nothing. Moved this to the top of the loop.
 
 
                 // Backtrack to the previous character
