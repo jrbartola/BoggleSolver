@@ -81,4 +81,19 @@ public class TrieNode {
         return child.getNumPrefixes(s, index+1);
     }
 
+    public TrieNode getEndOfPrefix(String s) {
+        return getEndOfPrefix(s, 0);
+    }
+
+    private TrieNode getEndOfPrefix(String s, int index) {
+        if (s.length() == index)
+            return this;
+
+        TrieNode child = getNodeFor(s.charAt(index));
+
+        if (child == null) return null;
+
+        return child.getEndOfPrefix(s, index + 1);
+    }
+
 }

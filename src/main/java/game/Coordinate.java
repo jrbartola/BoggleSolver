@@ -7,10 +7,12 @@ public class Coordinate {
 
     public int row;
     public int col;
+    public int level;
 
     public Coordinate(int row, int col) {
         this.row = row;
         this.col = col;
+        level = 1;
     }
 
     @Override
