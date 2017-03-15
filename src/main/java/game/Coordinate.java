@@ -28,7 +28,7 @@ public class Coordinate {
 
         Coordinate c = (Coordinate)obj;
 
-        return row == c.row && col == col;
+        return row == c.row && col == c.col;
 
     }
 

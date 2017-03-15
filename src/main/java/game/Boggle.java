@@ -44,14 +44,15 @@ public class Boggle {
 
         return solutions;
     }
-    
+
 
     private List<String> dfsFind(Coordinate coord) {
         List<String> wordList = new ArrayList<String>();
+        List<Coordinate> usedLetters = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
 
         TrieNode currNode = dict.root;
-        TrieNode prevNode = null;
+       // TrieNode prevNode = null;
         TrieNode child;
 
         Stack<Coordinate> s = new Stack<>();
@@ -62,7 +63,14 @@ public class Boggle {
             char currChar = matrix[curr.row][curr.col];
 
             while (curr.level != sb.length() + 1) {
+                // Backtrack to a letter the same distance away from our start coordinate
                 sb.deleteCharAt(sb.length()-1);
+                usedLetters.remove(usedLetters.size()-1);
+            }
+
+            if (usedLetters.contains(curr)) {
+                // We can't use the same letter twice in a single word
+                continue;
             }
 
             child = null;
@@ -76,9 +84,9 @@ public class Boggle {
             if (child != null) {
                 // If words exist with this prefix add it to stringBuilder
                 sb.append(currChar);
+                usedLetters.add(curr);
 
-
-                prevNode = currNode;
+                //prevNode = currNode;
                 currNode = child;
 
                 if (sb.length() > 2 && dict.root.exists(sb.toString())) {
@@ -87,7 +95,6 @@ public class Boggle {
 
                 for (Coordinate c : getAdjacent(curr)) {
                     c.level = curr.level + 1;
-                    //System.out.println("currently: " + sb.toString() + "    " + c);
                     s.push(c);
                 }
 
@@ -154,7 +161,11 @@ public class Boggle {
     public static void main(String[] args) {
         Boggle b = new Boggle(3, new char[][] {{'a','r','m'},
                 {'b','e','s'}, {'n','i','m'}}, "src/main/java/dictionary.txt");
-        b.solve().forEach(r -> System.out.println(r));
+        Boggle f = new Boggle(4, new char[][] {{'b', 'o', 'r', 'e'},
+                {'r', 't', 'a', 'n'}, {'j', 'l', 'o', 'p'}, {'n', 'a', 'v', 'y'}}, "src/main/java/dictionary.txt");
+        //b.solve().forEach(r -> System.out.println(r));
+        System.out.println();
+        f.solve().forEach(r -> System.out.println(r));
     }
 
 
