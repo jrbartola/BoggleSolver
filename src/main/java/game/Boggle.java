@@ -31,6 +31,13 @@ public class Boggle {
 
     }
 
+    public Boggle(int dim, char[][] matrix, DictionaryTrie dt) {
+        this.dim = dim;
+        this.matrix = matrix;
+        this.dict = dt;
+
+    }
+
     public List<String> solve() {
         List<String> solutions = new ArrayList<String>();
 
@@ -62,10 +69,13 @@ public class Boggle {
             Coordinate curr = s.pop();
             char currChar = matrix[curr.row][curr.col];
 
+            //int sbLen = sb.length() + 1;
+
             while (curr.level != sb.length() + 1) {
                 // Backtrack to a letter the same distance away from our start coordinate
-                sb.deleteCharAt(sb.length()-1);
-                usedLetters.remove(usedLetters.size()-1);
+                sb.deleteCharAt(sb.length() - 1);
+                usedLetters.remove(usedLetters.size() - 1);
+                //sbLen--;
             }
 
             if (usedLetters.contains(curr)) {
@@ -147,10 +157,10 @@ public class Boggle {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder((dim * 2 - 1) * dim);
+
         for (int i = 0; i < dim; i++) {
             for (int j = 0; j < dim; j++) {
-                sb.append(matrix[i][j]);
-                sb.append(" ");
+                sb.append(matrix[i][j] + " ");
             }
             sb.append("\n");
         }
@@ -161,11 +171,17 @@ public class Boggle {
     public static void main(String[] args) {
         Boggle b = new Boggle(3, new char[][] {{'a','r','m'},
                 {'b','e','s'}, {'n','i','m'}}, "src/main/java/dictionary.txt");
-        Boggle f = new Boggle(4, new char[][] {{'b', 'o', 'r', 'e'},
-                {'r', 't', 'a', 'n'}, {'j', 'l', 'o', 'p'}, {'n', 'a', 'v', 'y'}}, "src/main/java/dictionary.txt");
-        //b.solve().forEach(r -> System.out.println(r));
-        System.out.println();
-        f.solve().forEach(r -> System.out.println(r));
+        
+        //Boggle f = new Boggle(4, new char[][] {{'b', 'o', 'r', 'e'},
+                //{'r', 't', 'a', 'n'}, {'j', 'l', 'o', 'p'}, {'n', 'a', 'v', 'y'}}, "src/main/java/dictionary.txt");
+
+        System.out.println("Solving: \n\n" + b);
+        List<String> solution = b.solve();
+        solution.sort((f, s) -> f.length() < s.length() ? 1 : f.length() == s.length() ? 0 : -1);
+        solution.forEach(r -> System.out.println(r));
+
+        //f.solve().forEach(r -> System.out.println(r));
+
     }
 
 
