@@ -171,7 +171,7 @@ public class Boggle {
     public static void main(String[] args) {
         Boggle b = new Boggle(3, new char[][] {{'a','r','m'},
                 {'b','e','s'}, {'n','i','m'}}, "src/main/java/dictionary.txt");
-        
+
         //Boggle f = new Boggle(4, new char[][] {{'b', 'o', 'r', 'e'},
                 //{'r', 't', 'a', 'n'}, {'j', 'l', 'o', 'p'}, {'n', 'a', 'v', 'y'}}, "src/main/java/dictionary.txt");
 

@@ -27,21 +27,21 @@ public class DictionaryTrie {
     }
 
 
-    public static void main(String[] args) {
-        try {
-            DictionaryTrie dt = new DictionaryTrie(new File("src/main/java/dictionary.txt"));
-            System.out.println(dt.root.exists("ballerina"));
-            System.out.println(dt.root.getNumPrefixesOf("bnt"));
-            System.out.println(dt.root.getNumPrefixesOf("bna"));
-            System.out.println(dt.root.getNumPrefixesOf("bng"));
-            System.out.println(dt.root.getNumPrefixesOf("bne"));
-            System.out.println(dt.root.getNumPrefixesOf("bnr"));
-            System.out.println(dt.root.getNumPrefixesOf("bno"));
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
+//    public static void main(String[] args) {
+//        try {
+//            DictionaryTrie dt = new DictionaryTrie(new File("src/main/java/dictionary.txt"));
+//            System.out.println(dt.root.exists("ballerina"));
+//            System.out.println(dt.root.getNumPrefixesOf("bnt"));
+//            System.out.println(dt.root.getNumPrefixesOf("bna"));
+//            System.out.println(dt.root.getNumPrefixesOf("bng"));
+//            System.out.println(dt.root.getNumPrefixesOf("bne"));
+//            System.out.println(dt.root.getNumPrefixesOf("bnr"));
+//            System.out.println(dt.root.getNumPrefixesOf("bno"));
+//
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 }
